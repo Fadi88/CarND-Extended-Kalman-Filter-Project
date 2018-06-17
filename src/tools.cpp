@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include "tools.h"
 
 using Eigen::VectorXd;
@@ -69,3 +70,4 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 
 	return Hj;
 }
+
