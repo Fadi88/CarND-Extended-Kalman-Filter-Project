@@ -58,13 +58,18 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     z_pred << ro , theta , rodot ; 
 
     VectorXd y = z - z_pred ;
-
+    
+    std::cout << "y = " << y << std::endl ;
     while(y(1) > M_PI){
-        y(1) -= 2 * M_PI;
+	//std::cout << "y = " << y << std::endl ;
+	//std::cout << " ----------------------- theta --" << std::endl;
+        y(1) -= 1 * M_PI;
     }
 
     while(y(1) < -M_PI){
-        y(1) += 2 * M_PI;
+	//std::cout << "y = " << y << std::endl ;
+	//std::cout << " ----------------------- theta ++" << std::endl;
+        y(1) += 1 * M_PI;
     }
  
     MatrixXd Ht = H_.transpose();
@@ -72,7 +77,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     MatrixXd Si = S.inverse();
     MatrixXd PHt = P_ * Ht;
     MatrixXd K = PHt * Si;
-
+	std::cout << "K = " << K << std::endl ;
     //new estimate
     x_ = x_ + (K * y);
     P_ = (MatrixXd::Identity(x_.size(), x_.size()) - K * H_) * P_;
